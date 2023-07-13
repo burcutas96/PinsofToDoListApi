@@ -7,19 +7,19 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class DoingsController : ControllerBase
+    public class DonesController : ControllerBase
     {
-        IDoingService _doingService;
+        IDoneService _doneService;
 
-        public DoingsController(IDoingService doingService)
+        public DonesController(IDoneService doneService)
         {
-            _doingService = doingService;
+            _doneService = doneService;
         }
 
         [HttpGet]
         public IActionResult GetAll()
         {
-            var result = _doingService.GetAll();
+            var result = _doneService.GetAll();
 
             if (result.Success)
                 return Ok(result);
@@ -30,7 +30,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public IActionResult Get(int id)
         {
-            var result = _doingService.Get(id);
+            var result = _doneService.Get(id);
 
             if (result.Success)
                 return Ok(result);
@@ -39,9 +39,9 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(Doing doing)
+        public IActionResult Add(Done done)
         {
-            var result = _doingService.Add(doing);
+            var result = _doneService.Add(done);
 
             if (result.Success)
                 return Ok(result);
@@ -50,9 +50,9 @@ namespace WebApi.Controllers
         }
 
         [HttpPut]
-        public IActionResult Update(Doing doing)
+        public IActionResult Update(Done done)
         {
-            var result = _doingService.Update(doing);
+            var result = _doneService.Update(done);
 
             if (result.Success)
                 return Ok(result);
@@ -61,9 +61,9 @@ namespace WebApi.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Delete(Doing doing)
+        public IActionResult Delete(Done done)
         {
-            var result = _doingService.Delete(doing);
+            var result = _doneService.Delete(done);
 
             if (result.Success)
                 return Ok(result);

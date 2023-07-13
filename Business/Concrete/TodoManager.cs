@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constants.Messages;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -13,48 +14,39 @@ namespace Business.Concrete
     public class TodoManager : ITodoService
     {
         ITodoDal _todoDal;
-        IDoingService _doingService;
 
-        public TodoManager(ITodoDal todoDal, IDoingService doingService)
+        public TodoManager(ITodoDal todoDal)
         {
             _todoDal = todoDal;
-            _doingService = doingService;
         }
 
 
         public IResult Add(Todo entity)
         {
             _todoDal.Add(entity);
-            return new SuccessResult();
+            return new SuccessResult(TodoMessages.TodoAdded);
         }
 
         public IResult Delete(Todo entity)
         {
             _todoDal.Delete(entity);
-
-            Doing doing = new Doing
-            {
-                Task = entity.Task
-            };
-
-            _doingService.Add(doing);
-            return new SuccessResult();
+            return new SuccessResult(TodoMessages.TodoDeleted);
         }
 
         public IDataResult<Todo> Get(int id)
         {
-            return new SuccessDataResult<Todo>(_todoDal.Get(t => t.Id == id));
+            return new SuccessDataResult<Todo>(_todoDal.Get(t => t.Id == id), TodoMessages.TodoWasBrought);
         }
 
         public IDataResult<List<Todo>> GetAll()
         {
-            return new SuccessDataResult<List<Todo>>(_todoDal.GetAll());
+            return new SuccessDataResult<List<Todo>>(_todoDal.GetAll(), TodoMessages.TodosListed);
         }
 
         public IResult Update(Todo entity)
         {
             _todoDal.Update(entity);
-            return new SuccessResult();
+            return new SuccessResult(TodoMessages.TodoUpdated);
         }
     }
 }
